@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageCover"
+        android:layout_width="130dp"
+        android:layout_height="114dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/textJudul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/imageCover"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Judul Laporan" />
+
+    <TextView
+        android:id="@+id/textLabelPelapor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="10dp"
+        android:text="Pelapor"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageCover"
+        app:layout_constraintTop_toBottomOf="@+id/textJudul" />
+
+    <TextView
+        android:id="@+id/textPelapor"
+        android:layout_width="62dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textLabelPelapor"
+        app:layout_constraintTop_toBottomOf="@+id/textJudul"
+        tools:text="Pelapor" />
+
+    <TextView
+        android:id="@+id/textLabelTanggal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="10dp"
+        android:text="Tanggal"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageCover"
+        app:layout_constraintTop_toBottomOf="@+id/textLabelPelapor" />
+
+    <TextView
+        android:id="@+id/textTanggal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textLabelTanggal"
+        app:layout_constraintTop_toBottomOf="@+id/textPelapor"
+        tools:text="Tanggal" />
+
+    <TextView
+        android:id="@+id/textLokasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageCover"
+        app:layout_constraintTop_toBottomOf="@+id/textLabelTanggal"
+        tools:text="Lokasi" />
+</android.support.constraint.ConstraintLayout>

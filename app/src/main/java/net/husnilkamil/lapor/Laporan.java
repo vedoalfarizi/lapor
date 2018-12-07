@@ -23,18 +23,6 @@ public class Laporan implements Parcelable{
         this.foto = foto;
     }
 
-    public static final Creator<Laporan> CREATOR = new Creator<Laporan>() {
-        @Override
-        public Laporan createFromParcel(Parcel in) {
-            return new Laporan(in);
-        }
-
-        @Override
-        public Laporan[] newArray(int size) {
-            return new Laporan[size];
-        }
-    };
-
     @Override
     public int describeContents() {
         return 0;
@@ -61,4 +49,18 @@ public class Laporan implements Parcelable{
         lokasi = in.readString();
         foto = in.readString();
     }
+
+    public static final Creator<Laporan> CREATOR = new Creator<Laporan>() {
+        @Override
+        public Laporan createFromParcel(Parcel in) {
+            return new Laporan(in);
+        }
+
+        @Override
+        public Laporan[] newArray(int size) {
+            return new Laporan[size];
+        }
+    };
 }
+
+
