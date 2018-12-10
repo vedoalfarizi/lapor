@@ -26,11 +26,10 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.LaporanH
 
     @NonNull
     @Override
-    public LaporanAdapter.LaporanHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public LaporanHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(
                 viewGroup.getContext()
         ).inflate(R.layout.listlaporan, viewGroup, false);
-
         LaporanHolder holder = new LaporanHolder(v);
 
         return holder;
@@ -40,7 +39,12 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.LaporanH
     public void onBindViewHolder(@NonNull LaporanHolder holder, int i) {
         Laporan laporan = dataLaporan.get(i);
 
+        holder.textJudul.setText(laporan.judul);
+        holder.textPelapor.setText(laporan.pelapor);
+        holder.textTanggal.setText(laporan.tanggal);
+        holder.textLokasi.setText(laporan.lokasi);
 
+        //gambar belum
     }
 
     @Override

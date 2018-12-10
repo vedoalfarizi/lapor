@@ -1,5 +1,6 @@
 package net.husnilkamil.lapor;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
     private RecyclerView rvLaporan;
     private LaporanAdapter adapter;
 
+    ArrayList<Laporan> daftarLaporan = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +34,9 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
         adapter = new LaporanAdapter();
         adapter.setHandler(this);
 
-        rvLaporan= (RecyclerView) findViewById(R.id.rvMain);
+        rvLaporan= findViewById(R.id.rvMain);
 
         rvLaporan.setAdapter(adapter);
-
         getAllLaporan();
     }
 
@@ -55,20 +57,21 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
         .baseUrl("http://nagarikapa.com/lapor/api/")
         .addConverterFactory(GsonConverterFactory.create())
         .build())
-                .create(LaporanApiClient.class);
+        .create(LaporanApiClient.class);
 
-        Call<LaporanData> call = client.getAllLaporan();
+        Call<List<Laporan>> call = client.getAllLaporan();
 
-        call.enqueue(new Callback<LaporanData>() {
+        call.enqueue(new Callback<List<Laporan>>() {
             @Override
-            public void onResponse(Call<LaporanData> call, Response<LaporanData> response) {
-                LaporanData laporanData = response.body();
-                List<Laporan> results = laporanData.results;
-                adapter.setDataLaporan(new ArrayList<Laporan>(results));
+            public void onResponse(Call<List<Laporan>> call, Response<List<Laporan>> response) {
+                Toast.makeText(MainActivity.this, "berhasil", Toast.LENGTH_SHORT).show();
+                List<Laporan> laporanList = response.body();
+
+                adapter.setDataLaporan((ArrayList<Laporan>) laporanList);
             }
 
             @Override
-            public void onFailure(Call<LaporanData> call, Throwable t) {
+            public void onFailure(Call<List<Laporan>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Gagal Mengambil Data", Toast.LENGTH_SHORT).show();
             }
         });
@@ -76,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
 
     @Override
     public void click(Laporan m) {
-
+//        Intent detailActivityIntent = new Intent(this, DetailActivity.class);
+//        detailActivityIntent.putExtra("laporan_extra_key", m);
+//        startActivity(detailActivityIntent);
     }
 }

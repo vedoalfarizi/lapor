@@ -13,6 +13,7 @@ public class Laporan implements Parcelable{
     public String lokasi;
     public String foto;
 
+
     public Laporan(int id, String judul, String uraian, String pelapor, String tanggal, String lokasi, String foto){
         this.id = id;
         this.judul = judul;
