@@ -1,5 +1,6 @@
 package net.husnilkamil.lapor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
         call.enqueue(new Callback<List<Laporan>>() {
             @Override
             public void onResponse(Call<List<Laporan>> call, Response<List<Laporan>> response) {
-                Toast.makeText(MainActivity.this, "berhasil", Toast.LENGTH_SHORT).show();
                 List<Laporan> laporanList = response.body();
 
                 adapter.setDataLaporan((ArrayList<Laporan>) laporanList);
@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
 
     @Override
     public void click(Laporan m) {
-//        Intent detailActivityIntent = new Intent(this, DetailActivity.class);
-//        detailActivityIntent.putExtra("laporan_extra_key", m);
-//        startActivity(detailActivityIntent);
+        Intent detailActivityIntent = new Intent(this, DetailActivity.class);
+        detailActivityIntent.putExtra("laporan_extra_key", m);
+        startActivity(detailActivityIntent);
     }
 }
