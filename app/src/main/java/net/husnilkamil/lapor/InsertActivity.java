@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class InsertActivity extends AppCompatActivity {
     private TextInputLayout textInputJudul;
     private TextInputLayout textInputPelapor;
@@ -78,11 +81,17 @@ public class InsertActivity extends AppCompatActivity {
             return;
         }
 
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        String tanggal = sdf.format(calendar.getTime());
+
         String input = "Judul: " + textInputJudul.getEditText().getText().toString();
         input+="\n";
         input+= "Nama Anda: " + textInputPelapor.getEditText().getText().toString();
         input+="\n";
         input+= "Uraian: " + textInputUraian.getEditText().getText().toString();
+        input+="\n";
+        input+= "Tanggal: " + tanggal;
         input+="\n";
         input+= "Foto: " + textInputFoto.getEditText().getText().toString();
         input+="\n";
