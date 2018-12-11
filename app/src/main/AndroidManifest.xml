@@ -22,6 +22,9 @@
         <activity android:name=".DetailActivity"
             android:parentActivityName=".MainActivity"
             ></activity>
+        <activity android:name=".InsertActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

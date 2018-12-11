@@ -46,6 +46,12 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.addMenu:
+                getFormInput();
+                break;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -78,5 +84,10 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
         Intent detailActivityIntent = new Intent(this, DetailActivity.class);
         detailActivityIntent.putExtra("laporan_extra_key", m);
         startActivity(detailActivityIntent);
+    }
+
+    public void getFormInput(){
+        Intent insertActivityIntent = new Intent(this, InsertActivity.class);
+        startActivity(insertActivityIntent);
     }
 }
