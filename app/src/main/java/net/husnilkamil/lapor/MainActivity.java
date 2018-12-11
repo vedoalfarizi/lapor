@@ -1,11 +1,9 @@
 package net.husnilkamil.lapor;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -24,8 +22,6 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
     private RecyclerView rvLaporan;
     private LaporanAdapter adapter;
 
-    ArrayList<Laporan> daftarLaporan = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +31,9 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
         adapter.setHandler(this);
 
         rvLaporan= findViewById(R.id.rvMain);
-
-        rvLaporan.setAdapter(adapter);
         getAllLaporan();
+        rvLaporan.setLayoutManager(new LinearLayoutManager(this));
+        rvLaporan.setAdapter(adapter);
     }
 
     @Override
