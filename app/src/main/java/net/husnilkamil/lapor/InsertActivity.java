@@ -1,8 +1,19 @@
 package net.husnilkamil.lapor;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -10,12 +21,18 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class InsertActivity extends AppCompatActivity {
+public class InsertActivity extends AppCompatActivity{
     private TextInputLayout textInputJudul;
     private TextInputLayout textInputPelapor;
     private TextInputLayout textInputUraian;
     private TextInputLayout textInputFoto;
 
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+
+    public String longtitude, latitude;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +42,48 @@ public class InsertActivity extends AppCompatActivity {
         textInputPelapor = findViewById(R.id.textInputPelapor);
         textInputUraian = findViewById(R.id.textInputUraian);
         textInputFoto = findViewById(R.id.textInputFoto);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                double longi = location.getLongitude();
+                double lati = location.getLatitude();
+
+                longtitude = String.valueOf(longi);
+                latitude = String.valueOf(lati);
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.INTERNET
+            }, 10);
+
+            return;
+        }
+
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
     private boolean validateJudul(){
@@ -82,7 +141,7 @@ public class InsertActivity extends AppCompatActivity {
         }
 
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String tanggal = sdf.format(calendar.getTime());
 
         String input = "Judul: " + textInputJudul.getEditText().getText().toString();
@@ -94,6 +153,8 @@ public class InsertActivity extends AppCompatActivity {
         input+= "Tanggal: " + tanggal;
         input+="\n";
         input+= "Foto: " + textInputFoto.getEditText().getText().toString();
+        input+="\n";
+        input+= "Lokasi: " + longtitude + ", " + latitude;
         input+="\n";
 
         Toast.makeText(this, input, Toast.LENGTH_LONG).show();
