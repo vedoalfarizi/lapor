@@ -27,7 +27,7 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent != null){
             Laporan laporan= intent.getParcelableExtra("laporan_extra_key");
-            textJudul.setText(laporan.judul);
+            textJudul.setText(laporan.judul.toUpperCase());
             textTanggal.setText(laporan.tanggal);
             textLokasi.setText(laporan.lokasi);
             textPelapor.setText(laporan.pelapor);

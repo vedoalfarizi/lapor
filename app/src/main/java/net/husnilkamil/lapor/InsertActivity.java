@@ -18,8 +18,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InsertActivity extends AppCompatActivity{
     private TextInputLayout textInputJudul;
@@ -140,11 +148,17 @@ public class InsertActivity extends AppCompatActivity{
             return;
         }
 
+        String judul = textInputJudul.getEditText().getText().toString();
+        String uraian = textInputUraian.getEditText().getText().toString();
+        String pelapor = textInputPelapor.getEditText().getText().toString();
+
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String tanggal = sdf.format(calendar.getTime());
+        String lokasi = longtitude+";"+latitude;
+        String foto = textInputFoto.getEditText().getText().toString();
 
-        String input = "Judul: " + textInputJudul.getEditText().getText().toString();
+        String input = "Judul: " + judul;
         input+="\n";
         input+= "Nama Anda: " + textInputPelapor.getEditText().getText().toString();
         input+="\n";
@@ -154,9 +168,32 @@ public class InsertActivity extends AppCompatActivity{
         input+="\n";
         input+= "Foto: " + textInputFoto.getEditText().getText().toString();
         input+="\n";
-        input+= "Lokasi: " + longtitude + ", " + latitude;
+        input+= "Lokasi: " + lokasi;
         input+="\n";
 
-        Toast.makeText(this, input, Toast.LENGTH_LONG).show();
+        LaporanApiClient client = (new Retrofit.Builder()
+            .baseUrl("http://nagarikapa.com/lapor/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build())
+                .create(LaporanApiClient.class);
+
+        Call<ResponseBody> call = client.createLaporan(judul, uraian, pelapor, tanggal, lokasi, foto);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String s = response.body().string();
+                    Toast.makeText(InsertActivity.this, s, Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(InsertActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
