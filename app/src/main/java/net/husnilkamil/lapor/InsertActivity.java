@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -38,7 +42,11 @@ public class InsertActivity extends AppCompatActivity{
     private LocationManager locationManager;
     private LocationListener locationListener;
 
-    public String longtitude, latitude;
+    public double longtitude, latitude;
+    public  String lokasi;
+
+    Geocoder geocoder;
+    List<Address> addresses;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -51,15 +59,21 @@ public class InsertActivity extends AppCompatActivity{
         textInputUraian = findViewById(R.id.textInputUraian);
         textInputFoto = findViewById(R.id.textInputFoto);
 
+        geocoder = new Geocoder(this, Locale.getDefault());
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                double longi = location.getLongitude();
-                double lati = location.getLatitude();
+                longtitude = location.getLongitude();
+                latitude = location.getLatitude();
 
-                longtitude = String.valueOf(longi);
-                latitude = String.valueOf(lati);
+                try {
+                    addresses = geocoder.getFromLocation(latitude, longtitude, 1);
+                    lokasi = addresses.get(0).getAddressLine(0);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -92,6 +106,7 @@ public class InsertActivity extends AppCompatActivity{
         }
 
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
     }
 
     private boolean validateJudul(){
@@ -155,21 +170,8 @@ public class InsertActivity extends AppCompatActivity{
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String tanggal = sdf.format(calendar.getTime());
-        String lokasi = longtitude+";"+latitude;
-        String foto = textInputFoto.getEditText().getText().toString();
 
-        String input = "Judul: " + judul;
-        input+="\n";
-        input+= "Nama Anda: " + textInputPelapor.getEditText().getText().toString();
-        input+="\n";
-        input+= "Uraian: " + textInputUraian.getEditText().getText().toString();
-        input+="\n";
-        input+= "Tanggal: " + tanggal;
-        input+="\n";
-        input+= "Foto: " + textInputFoto.getEditText().getText().toString();
-        input+="\n";
-        input+= "Lokasi: " + lokasi;
-        input+="\n";
+        String foto = textInputFoto.getEditText().getText().toString();
 
         LaporanApiClient client = (new Retrofit.Builder()
             .baseUrl("http://nagarikapa.com/lapor/api/")
