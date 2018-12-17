@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.LaporanHolder>{
@@ -44,7 +46,10 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.LaporanH
         holder.textTanggal.setText(laporan.tanggal);
         holder.textLokasi.setText(laporan.lokasi);
 
-        //gambar belum
+        String cover_url = "http://nagarikapa.com/lapor/storage/" + laporan.foto;
+        Glide.with(holder.itemView)
+                .load(cover_url)
+                .into(holder.imgCover);
     }
 
     @Override

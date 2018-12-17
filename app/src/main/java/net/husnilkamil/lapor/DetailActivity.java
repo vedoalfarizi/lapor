@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 public class DetailActivity extends AppCompatActivity {
     ImageView imgCover;
     TextView textJudul, textTanggal, textLokasi, textPelapor, textUraian;
@@ -33,8 +35,8 @@ public class DetailActivity extends AppCompatActivity {
             textPelapor.setText(laporan.pelapor);
             textUraian.setText(laporan.uraian);
 
-//            String poster_url = "http://image.tmdb.org/t/p/w342" + laporan.foto;
-//            Glide.with(imgCover).load(poster_url).into(imgCover);
+            String cover_url = "http://nagarikapa.com/lapor/storage/" + laporan.foto;
+            Glide.with(imgCover).load(cover_url).into(imgCover);
         }
     }
 }
