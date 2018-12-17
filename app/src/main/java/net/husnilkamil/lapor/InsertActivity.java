@@ -37,6 +37,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -170,15 +173,11 @@ public class InsertActivity extends AppCompatActivity implements View.OnClickLis
                 if(Build.VERSION.SDK_INT > 21){
                     Glide.with(this).load(imageLaporanLoc).into(imageLaporan);
                     postPath = imageLaporanLoc;
-                    Toast.makeText(this, "masuk lokasi", Toast.LENGTH_SHORT).show();
                 }else{
                     Glide.with(this).load(fileUri).into(imageLaporan);
                     postPath = fileUri.getPath();
                 }
             }
-        }else{
-            Toast.makeText(this, "gagal masuk act result", Toast.LENGTH_SHORT).show();
-            Log.e("error", "error result");
         }
     }
 
@@ -193,12 +192,11 @@ public class InsertActivity extends AppCompatActivity implements View.OnClickLis
                 if(photo != null){
                     Uri outputUri = FileProvider.getUriForFile(
                             this,
-                            BuildConfig.APPLICATION_ID + ".provider",
+                            "net.husnilkamil.lapor.fileprovider",
                             photo
                     );
+                    Toast.makeText(this, "Foto siap dikirim", Toast.LENGTH_SHORT).show();
                     iTakePicture.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
-                    iTakePicture.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//                    Toast.makeText(this, "result akan mulai", Toast.LENGTH_SHORT).show(); ->jalan
                     startActivityForResult(iTakePicture, CAMERA_PIC_REQUEST);
                 }
             }
@@ -247,17 +245,19 @@ public class InsertActivity extends AppCompatActivity implements View.OnClickLis
 
     private File createPhotoFile() {
         String nama = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = null;
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/fotoLaporan");
-
-        if(!storageDir.exists()){
-            storageDir.mkdir();
+        try {
+            image = File.createTempFile(
+                    nama,
+                    ".jpg",
+                    storageDir
+            );
+        } catch (IOException e) {
+            Toast.makeText(this, "Gagal membuat gambar" + e.toString(), Toast.LENGTH_SHORT).show();
         }
 
-        image = new File(storageDir, nama + ".jpg");
-
         imageLaporanLoc = image.getAbsolutePath();
-        Toast.makeText(this, "gambar sudah dibuat", Toast.LENGTH_SHORT).show();
 
         return image;
     }
@@ -322,6 +322,13 @@ public class InsertActivity extends AppCompatActivity implements View.OnClickLis
         String tanggal = sdf.format(calendar.getTime());
 
         File file = new File(postPath);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(),
+                RequestBody.create(MediaType.parse("image/*"), file));
+        RequestBody pjudul = RequestBody.create(MediaType.parse("text/plain"), judul);
+        RequestBody puraian = RequestBody.create(MediaType.parse("text/plain"), uraian);
+        RequestBody ppelapor = RequestBody.create(MediaType.parse("text/plain"), pelapor);
+        RequestBody ptanggal = RequestBody.create(MediaType.parse("text/plain"), tanggal);
+        RequestBody plokasi = RequestBody.create(MediaType.parse("text/plain"), lokasi);
 
         LaporanApiClient client = (new Retrofit.Builder()
             .baseUrl("http://nagarikapa.com/lapor/api/")
@@ -329,7 +336,7 @@ public class InsertActivity extends AppCompatActivity implements View.OnClickLis
             .build())
                 .create(LaporanApiClient.class);
 
-        Call<ResponseBody> call = client.createLaporan(judul, uraian, pelapor, tanggal, lokasi, file);
+        Call<ResponseBody> call = client.createLaporan(pjudul, puraian, ppelapor, ptanggal, plokasi, filePart);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

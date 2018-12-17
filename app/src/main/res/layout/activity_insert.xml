@@ -8,71 +8,91 @@
     android:padding="16dp"
     tools:context=".InsertActivity">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputJudul"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.TextInputEditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Judul Laporan"
-            android:inputType="text"
-            />
+            android:orientation="vertical" >
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputJudul"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:errorEnabled="true">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputPelapor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true">
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Judul Laporan"
+                    android:inputType="text" />
 
-        <android.support.design.widget.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nama Anda"
-            android:inputType="text"
-            />
+            </android.support.design.widget.TextInputLayout>
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputPelapor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:errorEnabled="true">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputUraian"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true">
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nama Anda"
+                    android:inputType="text" />
 
-        <android.support.design.widget.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Uraian Laporan"
-            android:inputType="textMultiLine"
-            />
+            </android.support.design.widget.TextInputLayout>
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputUraian"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:errorEnabled="true">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputFoto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true">
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Uraian Laporan"
+                    android:inputType="textMultiLine" />
 
-        <android.support.design.widget.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Foto"
-            android:inputType="text"
-            />
+            </android.support.design.widget.TextInputLayout>
 
-    </android.support.design.widget.TextInputLayout>
+            <Button
+                android:id="@+id/buttonFoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose File" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:onClick="submitInput"/>
+            <ImageView
+                android:id="@+id/imageLaporan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="submitInput"
+                android:text="Submit" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!--<android.support.design.widget.TextInputLayout-->
+        <!--android:id="@+id/textInputFoto"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:errorEnabled="true">-->
+
+        <!--<android.support.design.widget.TextInputEditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Foto"-->
+            <!--android:inputType=""-->
+            <!--/>-->
+
+    <!--</android.support.design.widget.TextInputLayout>-->
 
 
 </LinearLayout>
