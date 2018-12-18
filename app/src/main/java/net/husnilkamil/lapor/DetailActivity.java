@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide;
 public class DetailActivity extends AppCompatActivity {
     ImageView imgCover;
     TextView textJudul, textTanggal, textLokasi, textPelapor, textUraian;
+    Button btnFav;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class DetailActivity extends AppCompatActivity {
         textLokasi = findViewById(R.id.textLokasi);
         textPelapor = findViewById(R.id.textPelapor);
         textUraian = findViewById(R.id.textUraian);
+        btnFav = findViewById(R.id.buttonFav);
 
         Intent intent = getIntent();
         if(intent != null){
@@ -37,6 +40,12 @@ public class DetailActivity extends AppCompatActivity {
 
             String cover_url = "http://nagarikapa.com/lapor/storage/" + laporan.foto;
             Glide.with(imgCover).load(cover_url).into(imgCover);
+
+            if(laporan.favorite == 0){
+                btnFav.setBackgroundResource(R.drawable.ic_btn_unlike);
+            }else{
+                btnFav.setBackgroundResource(R.drawable.ic_btn_like);
+            }
         }
     }
 }

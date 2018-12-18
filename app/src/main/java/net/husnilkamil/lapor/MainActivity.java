@@ -104,7 +104,8 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
                     n.pelapor,
                     n.tanggal,
                     n.lokasi,
-                    n.foto
+                    n.foto,
+                    n.favorite
                 );
                 laporans.add(l);
             }
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
                     lapor.tanggal = l.tanggal;
                     lapor.lokasi = l.lokasi;
                     lapor.foto = l.foto;
+                    lapor.favorite = l.favorite;
 
                     db.laporDao().insertLaporan(lapor);
                 }

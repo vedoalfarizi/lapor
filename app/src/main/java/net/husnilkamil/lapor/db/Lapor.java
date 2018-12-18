@@ -27,4 +27,7 @@ public class Lapor {
     @ColumnInfo(name = "foto")
     public String foto;
 
+    @ColumnInfo(name = "favorite")
+    public int favorite;
+
 }

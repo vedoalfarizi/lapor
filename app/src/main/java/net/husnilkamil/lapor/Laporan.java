@@ -12,9 +12,10 @@ public class Laporan implements Parcelable{
     public String tanggal;
     public String lokasi;
     public String foto;
+    public int favorite;
 
 
-    public Laporan(int id, String judul, String uraian, String pelapor, String tanggal, String lokasi, String foto){
+    public Laporan(int id, String judul, String uraian, String pelapor, String tanggal, String lokasi, String foto, int favorite){
         this.id = id;
         this.judul = judul;
         this.uraian = uraian;
@@ -22,6 +23,7 @@ public class Laporan implements Parcelable{
         this.tanggal = tanggal;
         this.lokasi = lokasi;
         this.foto = foto;
+        this.favorite = favorite;
     }
 
     @Override
@@ -38,6 +40,7 @@ public class Laporan implements Parcelable{
         dest.writeString(tanggal);
         dest.writeString(lokasi);
         dest.writeString(foto);
+        dest.writeInt(favorite);
     }
 
     protected Laporan(Parcel in){
@@ -49,6 +52,7 @@ public class Laporan implements Parcelable{
         tanggal = in.readString();
         lokasi = in.readString();
         foto = in.readString();
+        favorite = in.readInt();
     }
 
     public static final Creator<Laporan> CREATOR = new Creator<Laporan>() {

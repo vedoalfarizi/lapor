@@ -85,4 +85,15 @@
         app:layout_constraintTop_toBottomOf="@+id/textPelapor"
         tools:text="Uraian" />
 
+    <Button
+        android:id="@+id/buttonFav"
+        android:layout_width="49dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ic_btn_unlike"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textUraian" />
+
 </android.support.constraint.ConstraintLayout>

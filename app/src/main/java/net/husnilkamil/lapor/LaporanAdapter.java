@@ -50,6 +50,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.LaporanH
         Glide.with(holder.itemView)
                 .load(cover_url)
                 .into(holder.imgCover);
+
     }
 
     @Override
