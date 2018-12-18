@@ -30,6 +30,9 @@
         <activity android:name=".InsertActivity"
             android:parentActivityName=".MainActivity">
         </activity>
+        <activity android:name=".FavoriteActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

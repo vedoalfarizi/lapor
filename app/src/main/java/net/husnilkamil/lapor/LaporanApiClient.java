@@ -17,6 +17,9 @@ public interface LaporanApiClient {
     @GET("laporans")
     Call<List<Laporan>> getAllLaporan();
 
+    @GET("laporans/favorite")
+    Call<List<Laporan>> getFavLaporan();
+
     @Multipart
     @POST("laporans/create")
     Call<ResponseBody> createLaporan(

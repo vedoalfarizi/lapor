@@ -8,4 +8,9 @@
         android:icon="@android:drawable/ic_menu_add"
         android:title="Tambah"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/favMenu"
+        android:icon="@drawable/ic_btn_like"
+        android:title="Favorite"
+        app:showAsAction="always" />
 </menu>

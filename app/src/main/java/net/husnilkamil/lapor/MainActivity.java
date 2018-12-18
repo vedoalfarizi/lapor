@@ -63,9 +63,17 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
             case R.id.addMenu:
                 getFormInput();
                 break;
+            case  R.id.favMenu :
+                getFavAct();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getFavAct() {
+        Intent favActivityIntent = new Intent(this, FavoriteActivity.class);
+        startActivity(favActivityIntent);
     }
 
     private void getAllLaporan(){
