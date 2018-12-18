@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
                 break;
             case R.id.menuRefresh :
                 recreate();
+                Toast.makeText(this, "Berhasil Menyegarkan Data", Toast.LENGTH_SHORT).show();
                 break;
         }
 
