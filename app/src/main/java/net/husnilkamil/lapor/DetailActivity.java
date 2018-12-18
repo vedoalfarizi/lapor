@@ -24,9 +24,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener{
     ImageView imgCover;
     TextView textJudul, textTanggal, textLokasi, textPelapor, textUraian;
-    Button btnFav;
+    Button btnFav, btnShare;
 
     private int id, fav;
+    private String cover_url;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         textPelapor = findViewById(R.id.textPelapor);
         textUraian = findViewById(R.id.textUraian);
         btnFav = (Button) findViewById(R.id.buttonFav);
+        btnShare = (Button) findViewById(R.id.buttonShare);
 
         Intent intent = getIntent();
         if(intent != null){
@@ -51,7 +53,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             textPelapor.setText(laporan.pelapor);
             textUraian.setText(laporan.uraian);
 
-            String cover_url = "http://nagarikapa.com/lapor/storage/" + laporan.foto;
+            cover_url = "http://nagarikapa.com/lapor/storage/" + laporan.foto;
             Glide.with(imgCover).load(cover_url).into(imgCover);
 
             if(laporan.favorite == 0){
@@ -65,6 +67,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         btnFav.setOnClickListener(this);
+        btnShare.setOnClickListener(this);
     }
 
     @Override
@@ -77,6 +80,18 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(i);
                 finish();
                 break;
+            case R.id.buttonShare :
+                shareContent();
+        }
+    }
+
+    private void shareContent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("plain/text");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, cover_url);
+
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(shareIntent);
         }
     }
 

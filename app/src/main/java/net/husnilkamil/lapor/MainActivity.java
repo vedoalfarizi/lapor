@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
             case  R.id.favMenu :
                 getFavAct();
                 break;
+            case R.id.menuRefresh :
+                recreate();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
