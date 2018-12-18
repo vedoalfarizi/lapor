@@ -4,16 +4,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-public class DetailActivity extends AppCompatActivity {
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class DetailActivity extends AppCompatActivity implements View.OnClickListener{
     ImageView imgCover;
     TextView textJudul, textTanggal, textLokasi, textPelapor, textUraian;
     Button btnFav;
+
+    private int id, fav;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,7 +40,7 @@ public class DetailActivity extends AppCompatActivity {
         textLokasi = findViewById(R.id.textLokasi);
         textPelapor = findViewById(R.id.textPelapor);
         textUraian = findViewById(R.id.textUraian);
-        btnFav = findViewById(R.id.buttonFav);
+        btnFav = (Button) findViewById(R.id.buttonFav);
 
         Intent intent = getIntent();
         if(intent != null){
@@ -46,6 +59,52 @@ public class DetailActivity extends AppCompatActivity {
             }else{
                 btnFav.setBackgroundResource(R.drawable.ic_btn_like);
             }
+
+            id = laporan.id;
+            fav = laporan.favorite;
         }
+
+        btnFav.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.buttonFav :
+                submitFav();
+                Intent i = new Intent(this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+                break;
+        }
+    }
+
+    private void submitFav(){
+        LaporanApiClient client = (new Retrofit.Builder()
+                .baseUrl("http://nagarikapa.com/lapor/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build())
+                .create(LaporanApiClient.class);
+
+        Call<ResponseBody> call = client.favorite(id, fav);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String s = response.body().string();
+                    Toast.makeText(DetailActivity.this, s, Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
