@@ -16,6 +16,9 @@ public interface LaporDao {
     @Query("SELECT * FROM laporans WHERE id = :idLaporan")
     Lapor getById(int idLaporan);
 
+    @Query("SELECT * FROM laporans WHERE favorite = 1")
+    List<Lapor> getFavLaporans();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertLaporan(Lapor lapor);
 

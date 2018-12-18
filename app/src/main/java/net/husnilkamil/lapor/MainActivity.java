@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
         startActivity(insertActivityIntent);
     }
 
-    public boolean isConnected(){
+    private boolean isConnected(){
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
