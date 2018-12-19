@@ -3,10 +3,12 @@ package net.husnilkamil.lapor;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -40,7 +42,12 @@ public class MainActivity extends AppCompatActivity implements LaporanAdapter.On
         adapter.setHandler(this);
 
         rvLaporan= findViewById(R.id.rvMain);
-        rvLaporan.setLayoutManager(new LinearLayoutManager(this));
+        int orientation = getResources().getConfiguration().orientation;
+        if(orientation == Configuration.ORIENTATION_PORTRAIT){
+            rvLaporan.setLayoutManager(new LinearLayoutManager(this));
+        }else{
+            rvLaporan.setLayoutManager(new GridLayoutManager(this, 2));
+        }
         rvLaporan.setAdapter(adapter);
 
         db = Room.databaseBuilder(this, AppDatabase.class, "lapor.db")

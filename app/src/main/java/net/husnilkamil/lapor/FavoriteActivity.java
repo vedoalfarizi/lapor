@@ -2,10 +2,12 @@ package net.husnilkamil.lapor;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -37,7 +39,12 @@ public class FavoriteActivity extends AppCompatActivity implements LaporanAdapte
         adapter.setHandler(this);
 
         rvFavorite= findViewById(R.id.rvFav);
-        rvFavorite.setLayoutManager(new LinearLayoutManager(this));
+        int orientation = getResources().getConfiguration().orientation;
+        if(orientation == Configuration.ORIENTATION_PORTRAIT){
+            rvFavorite.setLayoutManager(new LinearLayoutManager(this));
+        }else{
+            rvFavorite.setLayoutManager(new GridLayoutManager(this, 2));
+        }
         rvFavorite.setAdapter(adapter);
 
         db = Room.databaseBuilder(this, AppDatabase.class, "lapor.db")
