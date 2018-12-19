@@ -195,7 +195,7 @@ public class InsertActivity extends AppCompatActivity implements View.OnClickLis
                             "net.husnilkamil.lapor.fileprovider",
                             photo
                     );
-                    Toast.makeText(this, "Foto siap dikirim", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Bersiap mengambil foto", Toast.LENGTH_SHORT).show();
                     iTakePicture.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
                     startActivityForResult(iTakePicture, CAMERA_PIC_REQUEST);
                 }
